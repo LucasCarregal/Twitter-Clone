@@ -4,7 +4,4 @@
 
 	$route = new \App\Route;
 
-	$teste = 'teste';
-
-
 ?>
