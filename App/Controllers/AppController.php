@@ -59,6 +59,7 @@ class AppController extends Action {
 
         if($pesquisarPor != ''){
             $usuario = Container::getModel('usuario');
+            $usuario->__set('id',$_SESSION['id']);
             $usuario->__set('nome',$pesquisarPor);
             $usuarios = $usuario->getAll();
 
@@ -68,6 +69,27 @@ class AppController extends Action {
 
         $this->render('quemSeguir');
         
+    }
+
+    public function acao(){
+
+        $this->validaAutenticacao();
+
+        $acao = isset($_GET['acao']) ? $_GET['acao'] : '';
+        $id_usuario_seguindo = isset($_GET['id_usuario']) ? $_GET['id_usuario'] : '';
+
+        $usuario = Container::getModel('usuario');
+        $usuario->__set('id',$_SESSION['id']);
+
+        if($acao == 'seguir'){
+            $usuario->seguirUsuario($id_usuario_seguindo);
+
+        }else if($acao == 'deixar_de_seguir'){
+            $usuario->deixarSeguirUsuario($id_usuario_seguindo);
+        }
+
+        header('location: /quem_seguir');
+
     }
 
 }
